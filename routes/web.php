@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Menu\MenuGroupController;
 use App\Http\Controllers\Menu\MenuItemController;
 use App\Http\Controllers\RoleAndPermission\AssignPermissionController;
@@ -35,12 +36,12 @@ Route::group(['middleware' => ['auth','verified']], function () {
     });
 
     Route::prefix('image-management')->group(function () {
-        Route::get('image', ImageController::class, 'index')->name('image.index');
-        Route::get('create', ImageController::class, 'create')->name('image.create');
-        Route::post('store', ImageController::class, 'store')->name('image.store');
-        Route::get('edit/{id}', ImageController::class, 'edit')->name('image.edit');
-        Route::post('update/{id}', ImageController::class, 'update')->name('image.update');
-        Route::get('delete/{id}', ImageController::class, 'delete')->name('image.delete');
+        Route::get('image', [ImageController::class, 'index'])->name('image.index');
+        Route::get('create', [ImageController::class, 'create'])->name('image.create');
+        Route::post('store', [ImageController::class, 'store'])->name('image.store');
+        Route::get('edit/{id}', [ImageController::class, 'edit'])->name('image.edit');
+        Route::post('update/{id}', [ImageController::class, 'update'])->name('image.update');
+        Route::get('delete/{id}', [ImageController::class, 'delete'])->name('image.delete');
     });
 
     //user list
