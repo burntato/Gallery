@@ -33,8 +33,17 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('/dashboard', function () {
         return view('home', ['users' => User::get(),]);
     });
-    //user list
 
+    Route::prefix('image-management')->group(function () {
+        Route::get('image', ImageController::class, 'index')->name('image.index');
+        Route::get('create', ImageController::class, 'create')->name('image.create');
+        Route::post('store', ImageController::class, 'store')->name('image.store');
+        Route::get('edit/{id}', ImageController::class, 'edit')->name('image.edit');
+        Route::post('update/{id}', ImageController::class, 'update')->name('image.update');
+        Route::get('delete/{id}', ImageController::class, 'delete')->name('image.delete');
+    });
+
+    //user list
     Route::prefix('user-management')->group(function () {
         Route::resource('user', UserController::class);
         Route::post('import', [UserController::class, 'import'])->name('user.import');
@@ -46,6 +55,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
         Route::resource('menu-group', MenuGroupController::class);
         Route::resource('menu-item', MenuItemController::class);
     });
+
     Route::group(['prefix' => 'role-and-permission'], function () {
         //role
         Route::resource('role', RoleController::class);
