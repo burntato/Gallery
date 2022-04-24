@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
         Route::post('store', [ImageController::class, 'store'])->name('image.store');
         Route::get('edit/{id}', [ImageController::class, 'edit'])->name('image.edit');
         Route::post('update/{id}', [ImageController::class, 'update'])->name('image.update');
-        Route::get('delete/{id}', [ImageController::class, 'delete'])->name('image.delete');
+        Route::delete('delete/{id}', [ImageController::class, 'destroy'])->name('image.delete');
     });
 
     //user list

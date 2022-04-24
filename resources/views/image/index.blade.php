@@ -44,7 +44,7 @@
                         </div>
 
                         {{-- Experimental Features --}}
-                        {{-- <div class="card-body">
+                        <div class="card-body">
                             <div class="show-import" style="display: none">
                                 <div class="custom-file">
                                     <form action="{{ route('user.import') }}" method="post" enctype="multipart/form-data">
@@ -57,7 +57,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div> --}}
+                            </div>
                             {{-- Experimental Features --}}
 
                             <div class="show-search mb-3" style="display: none">
@@ -90,24 +90,20 @@
                                                 <td>{{ ($images->currentPage() - 1) * $images->perPage() + $key + 1 }}</td>
                                                 <td>{{ $image->name }}</td>
                                                 <td>
-                                                    <img src="{{ asset('uploads/images/'.$image->file_name) }}" width="70px" height="70px" alt="Image">
+                                                    <img src="{{ asset('uploads/images/'.$image->file_name) }}" width="20%" height="20%" alt="Image">
                                                 </td>
                                                 <td>{{ $image->created_at }}</td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
-                                                        <a href="{{ route('image.edit/'.$image->id) }}"
+                                                        <a href="{{ route('image.edit', $image->id) }}"
                                                             class="btn btn-sm btn-info btn-icon "><i
                                                                 class="fas fa-edit"></i>
                                                             Edit</a>
-                                                        <form action="{{ route('image.destroy/'.$image->id) }}"
-                                                            method="POST" class="ml-2">
+                                                        <form action="{{ route('image.delete', $image->id) }}" method="POST" class="ml-2">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <input type="hidden" name="_method" value="DELETE">
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}">
-                                                            <button class="btn btn-sm btn-danger btn-icon "><i
-                                                                    class="fas fa-times"></i> Delete </button>
+                                                            <button class="btn btn-sm btn-danger btn-icon ">
+                                                                <i class="fas fa-times"></i> Delete </button>
                                                         </form>
                                                     </div>
                                                 </td>

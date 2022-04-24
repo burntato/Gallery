@@ -17,7 +17,7 @@ class ImageController extends Controller
      */
     public function index(Request $request)
     {
-        $images = DB::table('image')
+        $images = DB::table('images')
             ->when($request->input('name'), function ($query, $name) {
                 return $query->where('name', 'like', '%' . $name . '%');
             })
@@ -75,9 +75,9 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function edit(Image $image)
+    public function edit($id)
     {
-        $images = Image::find($image->id);
+        $images = Image::find($id);
         return view('image.edit', compact('images'));
     }
 
@@ -88,14 +88,14 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Image $image)
+    public function update(Request $request, $id)
     {
-        $images = Image::find($image->id);
+        $images = Image::find($id);
         $images->name = $request->input('name');
 
         if($request->hasFile('file_name')) {
 
-            $destination = 'uploads/images'.$image->file_name;
+            $destination = 'uploads/images'.$images->file_name;
 
             if(File::exists($destination)) {
 
@@ -110,7 +110,7 @@ class ImageController extends Controller
         }
 
         $images->update();
-        return redirect()->back()->with('status', 'Data berhasil diupdate');
+        return redirect()->route('image.index')->with('status', 'Data berhasil diupdate');
 
     }
 
@@ -120,10 +120,10 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Image $image)
+    public function destroy($id)
     {
-        $images = Image::find($image->id);
-        $destination = 'uploads/students/'.$image->file_name;
+        $images = Image::find($id);
+        $destination = 'uploads/students/'.$images->file_name;
 
         if(File::exists($destination)) {
 
@@ -131,6 +131,6 @@ class ImageController extends Controller
         }
 
         $images->delete();
-        return redirect()->back()->with('status', 'Data berhasil dihapus');
+        return redirect()->route('image.index')->with('status', 'Data berhasil dihapus');
     }
 }
