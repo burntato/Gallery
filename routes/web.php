@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
         Route::get('create', [ImageController::class, 'create'])->name('image.create');
         Route::post('store', [ImageController::class, 'store'])->name('image.store');
         Route::get('edit/{id}', [ImageController::class, 'edit'])->name('image.edit');
-        Route::post('update/{id}', [ImageController::class, 'update'])->name('image.update');
+        Route::put('update/{id}', [ImageController::class, 'update'])->name('image.update');
         Route::delete('delete/{id}', [ImageController::class, 'destroy'])->name('image.delete');
     });
 

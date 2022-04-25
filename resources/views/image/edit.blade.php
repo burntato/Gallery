@@ -18,7 +18,7 @@
                     </div>
                     <div class="card-body">
                         @csrf
-                        @method('POST')
+                        @method('PUT')
                         <div class="form-group">
                             <label for="name">File Name</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
@@ -31,10 +31,10 @@
                         </div>
                         <div class="form-group">
                             <label for="image">File</label>
-                            <input type="file" class="file-control @error('image') is-invalid @enderror" id="image"
-                                name="image">
+                            <input type="file" class="file-control @error('image') is-invalid @enderror" id="file_name"
+                                name="file_name">
                             <img src="{{ asset('uploads/images/'.$images->file_name)}}" alt="{{ $images->name}}" width="70px" height="70px">
-                            @error('image')
+                            @error('file_name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="card-footer text-right">
                         <button class="btn btn-primary">Submit</button>
-                        <a class="btn btn-secondary" href="{{ route('user.index') }}">Cancel</a>
+                        <a class="btn btn-secondary" href="{{ route('image.index') }}">Cancel</a>
                     </div>
                 </form>
             </div>
