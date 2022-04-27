@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
         return view('home', ['users' => User::get(),]);
     });
 
+    //image management
     Route::prefix('image-management')->group(function () {
         Route::get('image', [ImageController::class, 'index'])->name('image.index');
         Route::get('create', [ImageController::class, 'create'])->name('image.create');

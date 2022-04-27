@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class ImageTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
@@ -23,6 +24,7 @@ class ImageTest extends TestCase
     public function test_login_admin()
     {
 
+        $this->seed();
         $this->withoutExceptionHandling();
 
         $response = $this->get('/login');
