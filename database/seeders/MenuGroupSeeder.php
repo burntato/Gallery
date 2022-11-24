@@ -40,7 +40,7 @@ class MenuGroupSeeder extends Seeder
                 ],
                 [
                     'name' => 'Image Management',
-                    'icon' => 'fas fa-image',
+                    'icon' => 'fas fa-map',
                     'permisison_name' => 'image.index',
                 ],
             ]

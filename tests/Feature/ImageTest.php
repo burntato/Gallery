@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Image;
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -11,106 +12,124 @@ use Tests\TestCase;
 class ImageTest extends TestCase
 {
     use RefreshDatabase;
+    public function setup(): void
+     {
+         # code...
+         parent::setUp();
+     }
     /**
      * A basic feature test example.
      *
      * @return void
      */
+    public function test_superadmin_can_see_image_list()
+    {
+        //login superadmin
+        $this->actingAs(User::find(1));
 
-    // public function refresh() {
-    //     shell_exec('php artisan migrate:refresh --seed');
+        //buka halaman image-management/image
+        $response = $this->get('/image-management/image');
+
+        //pastikan response 200
+        $response->assertStatus(200);
+
+        //assert ada variabel image management
+        $response->assertSeeText("Image List");
+        $response->assertSeeText("Image Management");
+        $response->assertSeeText("Upload New Image");
+
+    }
+
+    // public function test_login_admin()
+    // {
+
+    //     $this->seed();
+    //     $this->withoutExceptionHandling();
+
+    //     $response = $this->get('/login');
+
+    //     $response = $this->from('/login')->post('/login', [
+    //         'email' => 'superadmin@gmail.com',
+    //         'password' => 'password'
+    //     ]);
+
+    //     $response->assertRedirect('/dashboard');
+
+
     // }
 
-    public function test_login_admin()
-    {
+    // public function test_lihat_halaman_image_management() {
 
-        $this->seed();
-        $this->withoutExceptionHandling();
+    //     $this->withoutExceptionHandling();
 
-        $response = $this->get('/login');
+    //     $this->test_login_admin();
 
-        $response = $this->from('/login')->post('/login', [
-            'email' => 'superadmin@gmail.com',
-            'password' => 'password'
-        ]);
+    //     $response = $this->get('/image-management/image');
+    //     $response->assertSeeText('Image Management');
+    // }
 
-        $response->assertRedirect('/dashboard');
+    // public function test_tambah_image() {
 
+    //     $this->withoutExceptionHandling();
 
-    }
+    //     $this->test_login_admin();
+    //     $this->test_lihat_halaman_image_management();
 
-    public function test_lihat_halaman_image_management() {
+    //     $response = $this->get('/image-management/create');
+    //     $response->assertSeeText('Tambah Gambar');
 
-        $this->withoutExceptionHandling();
+    //     $response = $this->from('/image-management/create')->post('/image-management/store', [
+    //         'name' => 'imagetest',
+    //         'file_name' => UploadedFile::fake()->image('avatar.jpg'),
+    //     ]);
 
-        $this->test_login_admin();
+    //     $response->assertRedirect('/image-management/image');
+    //     $response = $this->get('/image-management/image');
 
-        $response = $this->get('/image-management/image');
-        $response->assertSeeText('Image Management');
-    }
+    //     $response->assertSeeText('imagetest');
+    // }
 
-    public function test_tambah_image() {
+    // public function test_edit_image() {
 
-        $this->withoutExceptionHandling();
+    //     $this->withoutExceptionHandling();
 
-        $this->test_login_admin();
-        $this->test_lihat_halaman_image_management();
+    //     $this->test_login_admin();
+    //     $this->test_lihat_halaman_image_management();
 
-        $response = $this->get('/image-management/create');
-        $response->assertSeeText('Tambah Gambar');
+    //     $response = $this->get('/image-management/image');
 
-        $response = $this->from('/image-management/create')->post('/image-management/store', [
-            'name' => 'imagetest',
-            'file_name' => UploadedFile::fake()->image('avatar.jpg'),
-        ]);
+    //     $response->assertSeeText('imagetest');
 
-        $response->assertRedirect('/image-management/image');
-        $response = $this->get('/image-management/image');
+    //     $response = $this->get('/image-management/edit/1');
+    //     $response->assertSeeText('Validasi Edit Data Gambar');
 
-        $response->assertSeeText('imagetest');
-    }
+    //     $response = $this->from('/image-management/edit/1')->put('/image-management/update/1', [
+    //         'name' => 'updatetest',
+    //         'file_name' => UploadedFile::fake()->image('avatar.jpg'),
+    //     ]);
 
-    public function test_edit_image() {
+    //     $response->assertRedirect('/image-management/image');
+    //     $response = $this->get('/image-management/image');
 
-        $this->withoutExceptionHandling();
+    //     $response->assertSeeText('updatetest');
+    // }
 
-        $this->test_login_admin();
-        $this->test_lihat_halaman_image_management();
+    // public function test_delete_image() {
 
-        $response = $this->get('/image-management/image');
+    //         $this->withoutExceptionHandling();
 
-        $response->assertSeeText('imagetest');
+    //         $this->test_login_admin();
+    //         $this->test_lihat_halaman_image_management();
 
-        $response = $this->get('/image-management/edit/1');
-        $response->assertSeeText('Validasi Edit Data Gambar');
+    //         $response = $this->get('/image-management/image');
 
-        $response = $this->from('/image-management/edit/1')->put('/image-management/update/1', [
-            'name' => 'updatetest',
-            'file_name' => UploadedFile::fake()->image('avatar.jpg'),
-        ]);
+    //         $response->assertSeeText('updatetest');
 
-        $response->assertRedirect('/image-management/image');
-        $response = $this->get('/image-management/image');
+    //         $response = $this->delete('/image-management/delete/1');
 
-        $response->assertSeeText('updatetest');
-    }
+    //         $response->assertRedirect('/image-management/image');
+    //         $response = $this->get('/image-management/image');
 
-    public function test_delete_image() {
-
-            $this->withoutExceptionHandling();
-
-            $this->test_login_admin();
-            $this->test_lihat_halaman_image_management();
-
-            $response = $this->get('/image-management/image');
-
-            $response->assertSeeText('updatetest');
-
-            $response = $this->delete('/image-management/delete/1');
-
-            $response->assertRedirect('/image-management/image');
-            $response = $this->get('/image-management/image');
-
-            $response->assertDontSeeText('updatetest');
-    }
+    //         $response->assertDontSeeText('updatetest');
+    // }
 }
