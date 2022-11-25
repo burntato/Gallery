@@ -27,8 +27,6 @@ services:
       MYSQL_USER: root
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
-    volumes:
-      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
     networks:
       - gallery
 
